@@ -1,8 +1,15 @@
-import 'package:ecommerceapp/screens/home_screen.dart';
+import 'package:ecommerceapp/controller/fav_controller.dart';
+import 'package:ecommerceapp/routes/app_routes.dart';
+import 'package:ecommerceapp/view/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Get.put(FavController(),permanent: true);
   runApp(const MyApp());
 }
 
@@ -25,7 +32,7 @@ class MyApp extends StatelessWidget {
       bodySmall: baseTextTheme.bodySmall?.copyWith(color: Colors.deepPurpleAccent),
     );
 
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -35,7 +42,8 @@ class MyApp extends StatelessWidget {
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
 
       ),
-      home: const HomeScreen(),
+      initialRoute: AppRoutes.home,
+      getPages: AppRoutes.routes,
     );
   }
 }
