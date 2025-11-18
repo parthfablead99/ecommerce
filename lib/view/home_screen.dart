@@ -86,23 +86,84 @@ class _HomeScreenState extends State<HomeScreen> {
 
             SizedBox(height: 15),
 
-            Obx(() => CarouselSlider(
-              items: controller.bannerImage.map((img) => Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  image: DecorationImage(
-                    image: AssetImage(img),
-                    fit: BoxFit.fill,
+            Obx((){
+              return Column(
+                children: [
+                  CarouselSlider(
+                      items: controller.bannerImage.map((img){
+                        return Container(
+                          margin: EdgeInsets.symmetric(
+                            horizontal: 6
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 12,
+                                offset: Offset(0, 4),
+                              )
+                            ],
+                            image: DecorationImage(
+                                image: AssetImage(img),
+                              fit: BoxFit.cover
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      options: CarouselOptions(
+                        height: 180,
+                        viewportFraction: .95,
+                        autoPlay: true,
+                        autoPlayInterval: Duration(seconds: 3),
+                        enlargeCenterPage: true,
+                        onPageChanged: (index, reason){
+                          controller.bannerIndex.value = index;
+                        }
+                      ),
                   ),
-                ),
-              )).toList(),
-              options: CarouselOptions(
-                height: 160,
-                viewportFraction: 1,
-                autoPlay: true,
-                autoPlayInterval: Duration(seconds: 3),
-              ),
-            )),
+                  SizedBox(height: 8),
+
+                  Obx(()=> Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                        controller.bannerImage.length, (index){
+                          bool isActive = controller.bannerIndex.value == index;
+                          return AnimatedContainer(
+                              duration: Duration(milliseconds: 300),
+                            margin: EdgeInsets.symmetric(horizontal: 4),
+                            height: 8,
+                            width: isActive ? 20 : 8,
+                            decoration: BoxDecoration(
+                              color: isActive ? Colors.deepPurpleAccent : Colors.grey,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          );
+                    }
+                    ),
+                  ),
+                  ),
+                ],
+              );
+            }),
+
+            // Obx(() => CarouselSlider(
+            //   items: controller.bannerImage.map((img) => Container(
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(12),
+            //       image: DecorationImage(
+            //         image: AssetImage(img),
+            //         fit: BoxFit.fill,
+            //       ),
+            //     ),
+            //   )).toList(),
+            //   options: CarouselOptions(
+            //     height: 160,
+            //     viewportFraction: 1,
+            //     autoPlay: true,
+            //     autoPlayInterval: Duration(seconds: 3),
+            //   ),
+            // )),
 
             SizedBox(height: 20),
 
@@ -183,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 10),
 
         SizedBox(
-          height: 170,
+          height: 180,
           child: Obx(() => ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: controller.featured.length,
@@ -235,6 +296,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                 overflow: TextOverflow.ellipsis,
                                 style: textTheme.headlineSmall?.copyWith(
                                   fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black87,
+                                ),
+                              ),
+
+                              Text(
+                                p.description,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: textTheme.headlineSmall?.copyWith(
+                                  fontSize: 8,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black87,
                                 ),

@@ -1,3 +1,4 @@
+import 'package:ecommerceapp/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/fav_controller.dart';
@@ -17,11 +18,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   RxInt selectedSize = (-1).obs;
 
   final sizes = [8, 10, 38, 40];
+  RxBool isMore = false.obs;
 
   @override
   Widget build(BuildContext context) {
     final product = widget.product;
     final textTheme = Theme.of(context).textTheme;
+    SizeConfig.init(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -99,7 +102,31 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
                     Text("Description", style: textTheme.titleMedium),
                     SizedBox(height: 5),
-                    Text(product.description, style: textTheme.headlineMedium?.copyWith(fontSize: 12)),
+
+                    Obx((){
+                      String text = product.description;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            text,
+                            maxLines: isMore.value ? null:1,
+                            overflow: isMore.value ? TextOverflow.visible : TextOverflow.ellipsis,
+                            style: textTheme.headlineMedium?.copyWith(fontSize: 12),
+                          ),
+                          SizedBox(height: 4,),
+
+                          GestureDetector(
+                            onTap: ()=> isMore.value = !isMore.value,
+                            child: Text(
+                                isMore.value ? 'Read Less':'Read More',
+                              style: textTheme.bodySmall?.copyWith(fontSize: 8),
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
+                    // Text(product.description, style: textTheme.headlineMedium?.copyWith(fontSize: 12)),
 
                     SizedBox(height: 20),
 
@@ -136,42 +163,52 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
                     SizedBox(height: 25),
 
-                    InkWell(
-                      onTap: () {},
-                      borderRadius: BorderRadius.circular(30),
-                      child: Container(
-                        height: 55,
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        InkWell(
+                          onTap: () {},
                           borderRadius: BorderRadius.circular(30),
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.deepPurpleAccent.shade400,
-                              Colors.deepPurpleAccent.shade200,
-                            ],
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.blue.withOpacity(0.3),
-                              blurRadius: 12,
-                              offset: Offset(0, 6),
+                          child: Container(
+                            height: SizeConfig.blockHeight * 10,
+                            width: SizeConfig.blockWidth * 70,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.deepPurpleAccent.shade400,
+                                  Colors.deepPurpleAccent.shade200,
+                                ],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.blue.withOpacity(0.3),
+                                  blurRadius: 12,
+                                  offset: Offset(0, 6),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        child: Text(
-                          "Buy Now",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0.5,
+                            child: Text(
+                              "Buy Now",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        IconButton(
+                          onPressed: (){},
+                          icon: Icon(Icons.shopping_bag_outlined),
+                        ),
+                      ],
                     ),
+
                     SizedBox(height: 20),
                   ],
                 ),

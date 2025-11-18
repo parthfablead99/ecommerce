@@ -9,6 +9,8 @@ class HomeController extends GetxController {
   RxList<ProductModel> featured = <ProductModel>[].obs;
   RxList<String> bannerImage = <String>[].obs;
 
+  RxInt bannerIndex = 0.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -74,6 +76,7 @@ class HomeController extends GetxController {
     bannerImage.assignAll([
       'assets/image/banner.jpg',
       'assets/image/banner1.jpeg',
+      'assets/image/images3.jpg'
     ]);
   }
 
