@@ -1,13 +1,16 @@
+import 'package:ecommerceapp/controller/cart_controller.dart';
+import 'package:ecommerceapp/model/cart_model.dart';
 import 'package:ecommerceapp/utils/size_config.dart';
+import 'package:ecommerceapp/view/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/fav_controller.dart';
 import '../model/product_detail_model.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  final ProductModel product;
+  // final ProductModel product;
 
-  const ProductDetailScreen({super.key, required this.product});
+  const ProductDetailScreen({super.key});
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -15,14 +18,22 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final FavController favController = Get.find<FavController>();
+  final CartController cartController = Get.find<CartController>();
   RxInt selectedSize = (-1).obs;
+  RxString selectedImage = ''.obs;
 
+  late ProductModel product;
   final sizes = [8, 10, 38, 40];
   RxBool isMore = false.obs;
 
+  void initState(){
+    super.initState();
+    product = Get.arguments;
+    selectedImage.value = product.image;
+  }
   @override
   Widget build(BuildContext context) {
-    final product = widget.product;
+
     final textTheme = Theme.of(context).textTheme;
     SizeConfig.init(context);
 
@@ -33,13 +44,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           children: [
             Stack(
               children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.40,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(product.image),
-                      fit: BoxFit.cover,
+                Obx(()=>Container(
+                    height: MediaQuery.of(context).size.height * 0.40,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(selectedImage.value),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
@@ -120,7 +132,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             onTap: ()=> isMore.value = !isMore.value,
                             child: Text(
                                 isMore.value ? 'Read Less':'Read More',
-                              style: textTheme.bodySmall?.copyWith(fontSize: 8),
+                              style: textTheme.bodySmall?.copyWith(fontSize: 10),
                             ),
                           ),
                         ],
@@ -137,7 +149,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       children: sizes.map((size) {
                         final index = sizes.indexOf(size);
                         return GestureDetector(
-                          onTap: () => selectedSize.value = index,
+                          onTap: () {
+                            // selectedSize.value = index;
+                            if (selectedSize.value == index) {
+                              selectedSize.value = -1;
+                              selectedImage.value = product.image;
+                            } else {
+                              selectedSize.value = index;
+
+                              if (product.sizedImages.containsKey(size)) {
+                                selectedImage.value = product.sizedImages[size]!;
+                              } else {
+                                selectedImage.value = product.image;
+                              }
+                            }
+                          },
                           child: Container(
                             margin: EdgeInsets.only(right: 10),
                             padding: EdgeInsets.symmetric(
@@ -163,15 +189,35 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
                     SizedBox(height: 25),
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () async{
+                            cartController.addCart(
+                              CartItemModel(
+                                  name: product.name,
+                                  brand: product.brand ?? '',
+                                  image: product.image,
+                                  price: product.price,
+                                  qty: 1.obs,
+                              )
+                            );
+                            Get.snackbar(
+                              'Added to Cart',
+                              '${product.name} added successfully',
+                              backgroundColor: Colors.deepPurpleAccent,
+                              duration: Duration(milliseconds: 1200),
+                              borderRadius: 12,
+                              margin: EdgeInsets.all(16),
+                              snackPosition: SnackPosition.BOTTOM,
+
+                            );
+
+                            await Future.delayed(Duration(milliseconds: 300));
+                            Get.to(() => CartScreen());
+                          },
                           borderRadius: BorderRadius.circular(30),
                           child: Container(
-                            height: SizeConfig.blockHeight * 10,
-                            width: SizeConfig.blockWidth * 70,
+                            height: SizeConfig.blockHeight * 5,
+                            width: SizeConfig.blockWidth * 100,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
@@ -192,7 +238,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ],
                             ),
                             child: Text(
-                              "Buy Now",
+                              "Add to Cart",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -202,13 +248,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ),
                           ),
                         ),
-                        IconButton(
-                          onPressed: (){},
-                          icon: Icon(Icons.shopping_bag_outlined),
-                        ),
-                      ],
-                    ),
-
                     SizedBox(height: 20),
                   ],
                 ),

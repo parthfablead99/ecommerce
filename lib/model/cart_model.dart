@@ -1,18 +1,17 @@
-class ProductModel {
+import 'package:get/get.dart';
+
+class CartItemModel {
   final String name;
   final String brand;
   final String image;
   final double price;
-  final String description;
+  RxInt qty;
 
-  final Map<int, String> sizedImages;
-
-  ProductModel({
+  CartItemModel({
     required this.name,
     required this.brand,
     required this.image,
     required this.price,
-    required this.description,
-    required this.sizedImages,
+    required this.qty,
   });
 }

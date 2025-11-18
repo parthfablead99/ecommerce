@@ -34,7 +34,16 @@ class _HomeScreenState extends State<HomeScreen> {
               radius: 20,
             ),
             SizedBox(width: 10),
-            Text("Welcome", style: textTheme.headlineSmall),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Welcome ,", style: textTheme.headlineSmall?.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                )),
+                Text("User", style: textTheme.headlineSmall?.copyWith(fontSize: 14)),
+              ],
+            ),
           ],
         ),
         actions: [
@@ -183,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     arguments: controller.categories);
                   },
                   child: Text('See All',
-                    style: textTheme.headlineSmall?.copyWith(
+                    style: textTheme.bodySmall?.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
@@ -232,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                   child: Text('See All',
-                    style: textTheme.headlineSmall?.copyWith(
+                    style: textTheme.bodySmall?.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
@@ -248,13 +257,12 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Obx(() => ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: controller.featured.length,
-              padding: EdgeInsets.symmetric(horizontal: 12),
+              // padding: EdgeInsets.symmetric(horizontal: 12),
               itemBuilder: (context, index) {
                 ProductModel p = controller.featured[index];
 
                 return GestureDetector(
-                  onTap: () => Get.to(() => ProductDetailScreen(product: p),
-                    arguments: p),
+                  onTap: () => Get.toNamed(AppRoutes.productDetail,arguments: p),
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: 200),
                     curve: Curves.easeOut,
@@ -346,7 +354,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) {
                 ProductModel p = controller.categories[index];
                 return GestureDetector(
-                  onTap: () => Get.to(() => ProductDetailScreen(product: p,), arguments: p),
+                  onTap: () => Get.toNamed(AppRoutes.productDetail,arguments: p),
                   child: AnimatedContainer(
                       duration: Duration(milliseconds: 200),
                     curve: Curves.easeOut,
@@ -393,8 +401,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: Colors.black,
                                   ),
                                 ),
-                                SizedBox(height: 4),
 
+                                Text(
+                                  p.description,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: textTheme.headlineSmall?.copyWith(
+                                    fontSize: 8,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                                SizedBox(height: 4),
                                 Text("₹${p.price}",
                                 style: textTheme.bodySmall?.copyWith(
                                   fontWeight: FontWeight.w500,
@@ -429,52 +447,52 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
 
-      bottomNavigationBar: Obx((){
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 15,
-                offset: Offset(0, -3)
-              ),
-            ]
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(25),
-              topLeft: Radius.circular(25),
-            ),
-            child: BottomNavigationBar(
-              onTap: (index){
-                  controller.onBottomTap(index);
-                  if(index == 2){
-                    Get.to(()=> FavScreen());
-                  }
-              },
-              showUnselectedLabels: false,
-              showSelectedLabels: false,
-              unselectedItemColor: Colors.grey.shade500,
-              selectedItemColor: Colors.deepPurpleAccent,
-              currentIndex: controller.selectedIndex.value,
-              backgroundColor: Colors.white,
-              elevation: 0,
-              type: BottomNavigationBarType.fixed,
-              items: [
-                _navItem(Icons.home,0,controller),
-                _navItem(Icons.search,1,controller),
-                _navItem(Icons.favorite,2,controller),
-                _navItem(Icons.person,3,controller),
-              ],
-            ),
-          ),
-        );
-      }),
+      // bottomNavigationBar: Obx((){
+      //   return Container(
+      //     decoration: BoxDecoration(
+      //       color: Colors.white,
+      //       borderRadius: BorderRadius.only(
+      //         topLeft: Radius.circular(25),
+      //         topRight: Radius.circular(25),
+      //       ),
+      //       boxShadow: [
+      //         BoxShadow(
+      //           color: Colors.black12,
+      //           blurRadius: 15,
+      //           offset: Offset(0, -3)
+      //         ),
+      //       ]
+      //     ),
+      //     child: ClipRRect(
+      //       borderRadius: BorderRadius.only(
+      //         topRight: Radius.circular(25),
+      //         topLeft: Radius.circular(25),
+      //       ),
+      //       child: BottomNavigationBar(
+      //         onTap: (index){
+      //             controller.onBottomTap(index);
+      //             if(index == 2){
+      //               Get.to(()=> FavScreen());
+      //             }
+      //         },
+      //         showUnselectedLabels: false,
+      //         showSelectedLabels: false,
+      //         unselectedItemColor: Colors.grey.shade500,
+      //         selectedItemColor: Colors.deepPurpleAccent,
+      //         currentIndex: controller.selectedIndex.value,
+      //         backgroundColor: Colors.white,
+      //         elevation: 0,
+      //         type: BottomNavigationBarType.fixed,
+      //         items: [
+      //           _navItem(Icons.home,0,controller),
+      //           _navItem(Icons.search,1,controller),
+      //           _navItem(Icons.favorite,2,controller),
+      //           _navItem(Icons.person,3,controller),
+      //         ],
+      //       ),
+      //     ),
+      //   );
+      // }),
       // bottomNavigationBar: Obx(() => BottomNavigationBar(
       //   currentIndex: controller.selectedIndex.value,
       //   selectedItemColor: Colors.blue,
@@ -495,24 +513,24 @@ class _HomeScreenState extends State<HomeScreen> {
       // )),
     );
   }
-  BottomNavigationBarItem _navItem(IconData icon, int index, controller) {
-    bool isSelected = controller.selectedIndex.value == index;
-
-    return BottomNavigationBarItem(
-      label: '',
-      icon: AnimatedContainer(
-        duration: Duration(milliseconds: 250),
-        padding: EdgeInsets.all(isSelected ? 10 : 5),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.deepPurpleAccent.withOpacity(0.15) : Colors.transparent,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(
-          icon,
-          size: isSelected ? 28 : 24,
-          color: isSelected ? Colors.deepPurpleAccent : Colors.grey.shade500,
-        ),
-      ),
-    );
-  }
+  // BottomNavigationBarItem _navItem(IconData icon, int index, controller) {
+  //   bool isSelected = controller.selectedIndex.value == index;
+  //
+  //   return BottomNavigationBarItem(
+  //     label: '',
+  //     icon: AnimatedContainer(
+  //       duration: Duration(milliseconds: 250),
+  //       padding: EdgeInsets.all(isSelected ? 10 : 5),
+  //       decoration: BoxDecoration(
+  //         color: isSelected ? Colors.deepPurpleAccent.withOpacity(0.15) : Colors.transparent,
+  //         shape: BoxShape.circle,
+  //       ),
+  //       child: Icon(
+  //         icon,
+  //         size: isSelected ? 28 : 24,
+  //         color: isSelected ? Colors.deepPurpleAccent : Colors.grey.shade500,
+  //       ),
+  //     ),
+  //   );
+  // }
 }

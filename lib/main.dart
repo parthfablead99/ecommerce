@@ -7,9 +7,12 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'controller/cart_controller.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Get.put(FavController(),permanent: true);
+  Get.put(CartController());
   runApp(const MyApp());
 }
 
@@ -42,7 +45,7 @@ class MyApp extends StatelessWidget {
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
 
       ),
-      initialRoute: AppRoutes.home,
+      initialRoute: AppRoutes.main,
       getPages: AppRoutes.routes,
     );
   }
