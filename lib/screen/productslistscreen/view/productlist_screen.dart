@@ -1,27 +1,15 @@
-import 'package:ecommerceapp/controller/fav_controller.dart';
-import 'package:ecommerceapp/model/product_detail_model.dart';
-import 'package:ecommerceapp/view/product_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../controller/product_controller.dart';
+import 'package:provider/provider.dart';
+import '../../favscreen/provider/favProvider.dart';
+import '../../productdetailscreen/model/productModel.dart';
+import '../../productdetailscreen/view/product_detail.dart';
+import '../provider/productlist_provider.dart';
 
-class ProductsList extends StatefulWidget {
-  const ProductsList({super.key});
+class ProductsList extends StatelessWidget {
+  final List<ProductModel> products;
 
-  @override
-  State<ProductsList> createState() => _ProductsListState();
-}
+  const ProductsList({super.key, required this.products});
 
-class _ProductsListState extends State<ProductsList> {
-  // final ProductsController controller = Get.put(ProductsController());
-  late List<ProductModel> products;
-  final FavController favController = Get.find<FavController>();
-
-  @override
-  void initState(){
-    super.initState();
-    products = Get.arguments as List<ProductModel>;
-  }
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -31,32 +19,23 @@ class _ProductsListState extends State<ProductsList> {
       body: SafeArea(
         child: Column(
           children: [
+            // ------------------ APP BAR ------------------------
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                // boxShadow: [
-                //   BoxShadow(
-                //     color: Colors.black12,
-                //     blurRadius: 6,
-                //     offset: Offset(0, 3),
-                //   ),
-                // ],
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               child: Stack(
                 alignment: Alignment.center,
                 children: [
                   Align(
                     alignment: Alignment.centerLeft,
                     child: GestureDetector(
-                      onTap: () => Get.back(),
+                      onTap: () => Navigator.pop(context),
                       child: Container(
-                        padding: EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(6),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Colors.grey.shade200,
                         ),
-                        child: Icon(Icons.arrow_back,
+                        child: const Icon(Icons.arrow_back,
                             size: 20, color: Colors.black),
                       ),
                     ),
@@ -68,39 +47,38 @@ class _ProductsListState extends State<ProductsList> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Opacity(
-                    opacity: 0,
-                    child: Container(
-                      padding: EdgeInsets.all(6),
-                      child: Icon(Icons.arrow_back, size: 20),
-                    ),
-                  ),
                 ],
               ),
             ),
-        
-            SizedBox(height: 10),
+
+            const SizedBox(height: 10),
+
+            // ------------------ PRODUCT GRID ------------------------
             Expanded(
               child: GridView.builder(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 itemCount: products.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                   childAspectRatio: 0.90,
                 ),
                 itemBuilder: (context, index) {
-                  ProductModel product = products[index];
-        
+                  final product = products[index];
+
                   return GestureDetector(
-                    onTap: () =>
-                        Get.to(() => ProductDetailScreen(),arguments: product),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ProductDetailScreen(product: product,),
+                      ),
+                    ),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black12,
                             blurRadius: 10,
@@ -115,7 +93,7 @@ class _ProductsListState extends State<ProductsList> {
                             child: Stack(
                               children: [
                                 ClipRRect(
-                                  borderRadius: BorderRadius.vertical(
+                                  borderRadius: const BorderRadius.vertical(
                                       top: Radius.circular(16)),
                                   child: Image.asset(
                                     product.image,
@@ -123,46 +101,49 @@ class _ProductsListState extends State<ProductsList> {
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-        
+
+                                // ------------------ FAVORITE ICON ------------------------
                                 Positioned(
                                   right: 8,
                                   top: 8,
-                                  child: Obx(() {
-                                    bool isFav =
-                                    favController.isFav(product);
-                                    return GestureDetector(
-                                      onTap: () =>
-                                          favController.toogleFav(product),
-                                      child: Container(
-                                        padding: EdgeInsets.all(6),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          shape: BoxShape.circle,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black12,
-                                              blurRadius: 6,
-                                            )
-                                          ],
+                                  child: Consumer<FavProvider>(
+                                    builder: (context, favProvider, _) {
+                                      bool isFav =
+                                      favProvider.isFav(product);
+                                      return GestureDetector(
+                                        onTap: () =>
+                                            favProvider.toggleFav(product),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(6),
+                                          decoration: const BoxDecoration(
+                                            color: Colors.white,
+                                            shape: BoxShape.circle,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black12,
+                                                blurRadius: 6,
+                                              )
+                                            ],
+                                          ),
+                                          child: Icon(
+                                            isFav
+                                                ? Icons.favorite
+                                                : Icons.favorite_border,
+                                            color: Colors.deepPurpleAccent,
+                                            size: 20,
+                                          ),
                                         ),
-                                        child: Icon(
-                                          isFav
-                                              ? Icons.favorite
-                                              : Icons.favorite_border,
-                                          color: isFav
-                                              ? Colors.deepPurpleAccent
-                                              : Colors.deepPurpleAccent,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    );
-                                  }),
+                                      );
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
                           ),
+
+                          // ------------------ NAME & PRICE ------------------------
                           Padding(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 8),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,29 +157,28 @@ class _ProductsListState extends State<ProductsList> {
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-        
-                                SizedBox(height: 4),
-        
+
+                                const SizedBox(height: 4),
+
                                 Row(
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "₹${product.price}",
-                                      style:
-                                      textTheme.headlineSmall?.copyWith(
+                                      style: textTheme.headlineSmall?.copyWith(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.deepPurpleAccent,
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.all(6),
-                                      decoration: BoxDecoration(
+                                      padding: const EdgeInsets.all(6),
+                                      decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Colors.deepPurpleAccent,
                                       ),
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.add,
                                         size: 18,
                                         color: Colors.white,
