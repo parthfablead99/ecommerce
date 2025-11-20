@@ -1,5 +1,6 @@
 import 'package:ecommerceapp/screen/checkoutscreen/provider/checkOutProvider.dart';
 import 'package:ecommerceapp/screen/checkoutscreen/view/paymentScreen.dart';
+import 'package:ecommerceapp/utils/stepIndicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -74,63 +75,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    children: [
-                      Icon(
-                          Icons.local_shipping_outlined,
-                        color: Colors.black,
-                      ),
-                      SizedBox(height: 4,),
-                      Text('Shipping',
-                        style: textTheme.headlineSmall?.copyWith(
-                          fontSize: 12
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: 2,
-                    width: 50,
-                    color: Colors.black,
-                  ),
-                  Column(
-                    children: [
-                      Icon(
-                        Icons.payment_outlined,
-                        color: Colors.black,
-                      ),
-                      SizedBox(height: 4),
-                      Text('Payment',
-                        style: textTheme.headlineSmall?.copyWith(
-                            fontSize: 12
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: 2,
-                    width: 50,
-                    color: Colors.black,
-                  ),
-                  Column(
-                    children: [
-                      Icon(
-                        Icons.receipt_long_outlined,
-                        color: Colors.black,
-                      ),
-                      SizedBox(height: 4),
-                      Text('Review',
-                        style: textTheme.headlineSmall?.copyWith(
-                            fontSize: 12
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              Stepindicator(currentStep: 1),
               SizedBox(height: 18),
 
               Center(
@@ -269,7 +214,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                           postalCode: postalController.text,
                       );
                       Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => PaymentScreen()),
+                        MaterialPageRoute(builder: (_) => Paymentscreen()),
                       );
                     }
                   },
