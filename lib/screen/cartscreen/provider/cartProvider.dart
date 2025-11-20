@@ -29,9 +29,7 @@ class CartProvider extends ChangeNotifier {
     if (item.qty > 1) {
       item.qty--;
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Quantity can't be less than 1")),
-      );
+      _cart.remove(item);
     }
     notifyListeners();
   }

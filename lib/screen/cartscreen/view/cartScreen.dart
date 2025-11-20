@@ -20,52 +20,70 @@ class _CartScreenState extends State<CartScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          child: Column(
-            children: [
-              // ---------- HEADER ----------
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        shape: BoxShape.circle,
+        child: Consumer<CartProvider>(
+          builder: (context, cartProvider, child) {
+            final isEmpty = cartProvider.cart.isEmpty;
+
+            return Column(
+              children: [
+                Padding(
+                  padding:
+                  const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.arrow_back),
+                        ),
                       ),
-                      child: const Icon(Icons.arrow_back),
-                    ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            'Cart',
+                            style: textTheme.headlineSmall?.copyWith(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.more_vert),
+                      ),
+                    ],
                   ),
+                ),
+
+                const SizedBox(height: 8),
+
+                if (isEmpty)
                   Expanded(
                     child: Center(
                       child: Text(
-                        'Cart',
-                        style: textTheme.headlineSmall?.copyWith(
+                        "No Products in Cart",
+                        style: textTheme.bodyLarge?.copyWith(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
+                          color: Colors.deepPurpleAccent,
                         ),
                       ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(Icons.more_vert),
-                  ),
-                ],
-              ),
-              SizedBox(height: 8),
 
-              // ---------- CART LIST ----------
-              Expanded(
-                child: Consumer<CartProvider>(
-                  builder: (context, cartProvider, child) {
-                    return ListView.builder(
+                if (!isEmpty)
+                  Expanded(
+                    child: ListView.builder(
                       itemCount: cartProvider.cart.length,
                       itemBuilder: (context, index) {
                         final item = cartProvider.cart[index];
@@ -90,7 +108,8 @@ class _CartScreenState extends State<CartScreen> {
                             cartProvider.removeItem(item);
                           },
                           child: Container(
-                            margin: const EdgeInsets.only(bottom: 14),
+                            margin: const EdgeInsets.only(
+                                bottom: 14, left: 8, right: 8),
                             padding: const EdgeInsets.all(14),
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -116,39 +135,40 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                                 const SizedBox(width: 12),
 
-                                // ---------- PRODUCT DETAILS ----------
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         item.name,
-                                        style: textTheme.headlineMedium
-                                            ?.copyWith(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                        style:
+                                        textTheme.bodyLarge?.copyWith(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       const SizedBox(height: 6),
                                       Text(
                                         "₹${item.price}",
                                         style: textTheme.bodyMedium?.copyWith(
-                                          fontSize: 14,
+                                          fontSize: 12,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-
-                                // ---------- QUANTITY ----------
                                 Column(
                                   children: [
                                     GestureDetector(
-                                      onTap: () => cartProvider.qualityDec(
-                                        context,
-                                        item,
-                                      ),
+                                      onTap: () {
+                                        if (item.qty == 1) {
+                                          cartProvider.removeItem(item);
+                                        } else {
+                                          cartProvider.qualityDec(
+                                              context, item);
+                                        }
+                                      },
                                       child: Container(
                                         padding: const EdgeInsets.all(6),
                                         decoration: const BoxDecoration(
@@ -191,15 +211,11 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         );
                       },
-                    );
-                  },
-                ),
-              ),
+                    ),
+                  ),
 
-              // ---------- SUMMARY BOX ----------
-              Consumer<CartProvider>(
-                builder: (context, p, child) {
-                  return Container(
+                if (!isEmpty)
+                  Container(
                     padding: const EdgeInsets.all(20),
                     margin: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
@@ -216,51 +232,60 @@ class _CartScreenState extends State<CartScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _summaryRow("Sub Total", "₹${p.subtotal}"),
-                        _summaryRow("Discount", "-₹${p.discount}"),
-                        _summaryRow("Delivery", "₹${p.delivery}"),
+                        _summaryRow("Sub Total", "₹${cartProvider.subtotal}"),
+                        _summaryRow("Discount", "-₹${cartProvider.discount}"),
+                        _summaryRow("Delivery", "₹${cartProvider.delivery}"),
                         const Divider(),
-                        _summaryRow("Total", "₹${p.total}"),
+                        _summaryRow("Total", "₹${cartProvider.total}"),
                       ],
                     ),
-                  );
-                },
-              ),
+                  ),
 
-              // ---------- CHECKOUT BUTTON ----------
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Checkoutscreen()),
-                  );
-                },
-                borderRadius: BorderRadius.circular(30),
-                child: Container(
-                  height: 50,
-                  width: SizeConfig.blockWidth * 70,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
+                if (!isEmpty)
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Checkoutscreen()),
+                      );
+                    },
                     borderRadius: BorderRadius.circular(30),
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.deepPurpleAccent.shade400,
-                        Colors.deepPurpleAccent.shade200,
-                      ],
+                    child: Container(
+                      height: 50,
+                      width: SizeConfig.blockWidth * 70,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.deepPurpleAccent.shade400,
+                            Colors.deepPurpleAccent.shade200,
+                          ],
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Check Out",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          Icon(Icons.shopping_cart_checkout,color: Colors.white,)
+                        ],
+                      ),
                     ),
                   ),
-                  child: Text(
-                    "Check Out",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+
+                const SizedBox(height: 10),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -272,11 +297,10 @@ class _CartScreenState extends State<CartScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(left, style: const TextStyle(fontSize: 14)),
-          Text(right, style: const TextStyle(fontSize: 14)),
+          Text(left, style: Theme.of(context).textTheme.bodyMedium),
+          Text(right, style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),
     );
   }
-
 }

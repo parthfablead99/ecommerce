@@ -23,7 +23,7 @@ class HomeProvider extends ChangeNotifier {
         image: 'assets/image/image1.jpg',
         price: 499,
         description:
-        "Casual shirts frequently incorporate decorative features such as pockets, logos, or contrasting stitching.",
+        "Casual wear (or casual attire or clothing) is a Western dress code that is relaxed, occasional, spontaneous and suited for everyday use. Casual wear became popular in the Western world following the counterculture of the 1960s. When emphasising casual wear's comfort, it may be referred to as leisurewear or loungewear",
         sizedImages: {
           8: 'assets/image/images3.jpg',
           10: 'assets/image/images2.jpg',
@@ -37,7 +37,7 @@ class HomeProvider extends ChangeNotifier {
         image: 'assets/image/images2.jpg',
         price: 1299,
         description:
-        "Sneakers are a specific type of shoe primarily designed for casual wear or sports.",
+        "Sneakers (US) or trainers (UK), also known by a wide variety of other names, are shoes primarily designed for sports or other forms of physical exercise, but are also widely used for everyday casual wear. They were popularized by companies such as Converse, Nike and Spalding in the mid 20th century.",
         sizedImages: {
           8: 'assets/image/images3.jpg',
           10: 'assets/image/images2.jpg',
@@ -50,7 +50,7 @@ class HomeProvider extends ChangeNotifier {
         brand: 'Apple',
         image: 'assets/image/images3.jpg',
         price: 1799,
-        description: "A smartwatch is a wearable computer in the form of a wristwatch.",
+        description: "A smartwatch is a wearable computer that functions as a portable device on your wrist, with capabilities that go beyond telling time. It can connect to a smartphone via Bluetooth to display notifications, receive calls, and send messages, as well as run apps. Smartwatches also include health and fitness tracking features like heart rate monitoring, step counting, and sleep tracking.",
         sizedImages: {
           8: 'assets/image/images3.jpg',
           10: 'assets/image/images2.jpg',
@@ -66,7 +66,7 @@ class HomeProvider extends ChangeNotifier {
         brand: 'Levis',
         image: 'assets/image/download.jpg',
         price: 299,
-        description: "A wallet is a flat case or pouch used to carry money and cards.",
+        description: "Wallets are generally made of fabric or leather, and they are usually pocket-sized and foldable. Wallets may include a money clip, coin purse, chain fastener, strap, snap, rein, or zipper. There are specialized wallets for holding passports, wearable ID cards, and checkbooks.",
         sizedImages: {
           8: 'assets/image/images3.jpg',
           10: 'assets/image/images2.jpg',
@@ -79,7 +79,7 @@ class HomeProvider extends ChangeNotifier {
         brand: 'Adidas',
         image: 'assets/image/download1.jpg',
         price: 899,
-        description: "A backpack is a bag carried on the back with two straps.",
+        description: "A backpack, also called knapsack, schoolbag, rucksack, pack, booksack, bookbag, haversack, packsack, or backsack, is in its simplest frameless form, a fabric sack carried on one's back and secured with two straps that go over the shoulders; but it can have an external or internal frame, and there are bodypacks.",
         sizedImages: {
           8: 'assets/image/images3.jpg',
           10: 'assets/image/images2.jpg',
@@ -92,7 +92,7 @@ class HomeProvider extends ChangeNotifier {
         brand: 'Nike',
         image: 'assets/image/download2.jpg',
         price: 999,
-        description: "Sports shoes are specially designed footwear for sports.",
+        description: "Sports shoes are specially designed footwear for performing sports activities. Compared to leisure shoes or sneakers, sports shoes are designed to: Facilitate movement. Minimize the risk of injury. Ensure the correct amount of grip, cushioning, breathability, and support.",
         sizedImages: {
           8: 'assets/image/images3.jpg',
           10: 'assets/image/images2.jpg',
@@ -106,7 +106,7 @@ class HomeProvider extends ChangeNotifier {
         image: 'assets/image/image1.jpg',
         price: 349,
         description:
-        "A T-shirt is a fabric shirt named after the T shape of its body.",
+        "A T-shirt (also spelled tee shirt, or tee for short) is a style of fabric shirt named after the T shape of its body and sleeves. Traditionally, it has short sleeves and a round neckline, known as a crew neck, which lacks a collar.",
         sizedImages: {
           8: 'assets/image/images3.jpg',
           10: 'assets/image/images2.jpg',
@@ -119,7 +119,7 @@ class HomeProvider extends ChangeNotifier {
         brand: 'Boat',
         image: 'assets/image/images2.jpg',
         price: 799,
-        description: "Earbuds are small headphones that fit inside the ear canal.",
+        description: "Earbuds are a type of small, lightweight headphone that fits into the ear canal for private listening. They are used for a variety of purposes, including listening to music, audiobooks, or podcasts, and for making phone calls using a built-in microphone. Earbuds can be wired or wireless (using Bluetooth) and are valued for their portability.",
         sizedImages: {
           8: 'assets/image/images3.jpg',
           10: 'assets/image/images2.jpg',
@@ -132,7 +132,7 @@ class HomeProvider extends ChangeNotifier {
         brand: 'West Side',
         image: 'assets/image/images3.jpg',
         price: 1099,
-        description: "A hoodie is made of warm, high-quality materials to keep you cozy.",
+        description: "Hoodies, short for hooded sweatshirts,are similar to traditional sweatshirts but come with an added hood feature. The hood can be adjusted using drawstrings, allowing the wearer to pull it tighter around their head for extra protection from cold weather and wind.",
         sizedImages: {
           8: 'assets/image/images3.jpg',
           10: 'assets/image/images2.jpg',

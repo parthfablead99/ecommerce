@@ -29,8 +29,8 @@ class HomeScreen extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Welcome,", style: textTheme.headlineSmall?.copyWith(fontSize: 16, fontWeight: FontWeight.bold)),
-                Text("User", style: textTheme.headlineSmall?.copyWith(fontSize: 14)),
+                Text("Welcome,", style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 16)),
+                Text("User", style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontSize: 12)  ),
               ],
             ),
           ],
@@ -55,7 +55,6 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // — Search field
               TextField(
                 onChanged: provider.updateSearchText,
                 decoration: InputDecoration(
@@ -76,8 +75,6 @@ class HomeScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 20),
-
-              // — Banner Slider
               CarouselSlider.builder(
                 itemCount: provider.bannerImage.length,
                 itemBuilder: (context, index, realIdx) {
@@ -103,8 +100,6 @@ class HomeScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 10),
-
-              // — Banner indicators
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: provider.bannerImage.asMap().entries.map((entry) {
@@ -124,12 +119,14 @@ class HomeScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 30),
-
-              // — Category Header
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Category", style: textTheme.headlineSmall?.copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Text("Category",
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.bold
+                      ),
+                  ),
                   TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -137,14 +134,14 @@ class HomeScreen extends StatelessWidget {
                         MaterialPageRoute(builder: (_) => ProductsList(products: provider.categories,)),
                       );
                     },
-                    child: const Text("See All"),
+                    child: Text("See All",
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ),
                 ],
               ),
 
               const SizedBox(height: 12),
-
-              // — Category List
               SizedBox(
                 height: 100,
                 child: ListView.separated(
@@ -160,9 +157,9 @@ class HomeScreen extends StatelessWidget {
                           backgroundImage: AssetImage(cat.image),
                         ),
                         const SizedBox(height: 6),
-                        Text(cat.name, style: textTheme.headlineSmall?.copyWith(
-                          fontSize: 12
-                        )),
+                        Text(cat.name,
+                            style:Theme.of(context).textTheme.bodySmall,
+                        ),
                       ],
                     );
                   },
@@ -170,12 +167,14 @@ class HomeScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 30),
-
-              // — Featured Header
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Featured", style: textTheme.headlineSmall?.copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Text("Featured",
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.bold
+                      ),
+                  ),
                   TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -183,14 +182,13 @@ class HomeScreen extends StatelessWidget {
                         MaterialPageRoute(builder: (_) => ProductsList(products: provider.featured,)),
                       );
                     },
-                    child: const Text("See All"),
+                    child: Text("See All",
+                    style: Theme.of(context).textTheme.bodyMedium,),
                   ),
                 ],
               ),
 
               const SizedBox(height: 12),
-
-              // — Featured Products
               SizedBox(
                 height: 200,
                 child: ListView.builder(
@@ -241,13 +239,22 @@ class HomeScreen extends StatelessWidget {
                                   Text(prod.name,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: textTheme.headlineSmall?.copyWith(
-                                        fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                      )),
+                                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                  ),
                                   const SizedBox(height: 4),
+                                  Text(prod.description,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      fontSize: 10
+                                    ),
+                                  ),
                                   Text("₹${prod.price}",
-                                      style: textTheme.bodySmall?.copyWith(color: Colors.deepPurpleAccent)),
+                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        fontSize: 10,
+                                      )),
                                 ],
                               ),
                             ),
@@ -260,9 +267,10 @@ class HomeScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 30),
-
-              // — Most Popular (same as categories for now)
-              Text("Most Popular", style: textTheme.headlineSmall?.copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text("Most Popular",
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.bold
+                  )),
               const SizedBox(height: 12),
 
               ListView.separated(
@@ -307,20 +315,21 @@ class HomeScreen extends StatelessWidget {
                                 Text(prod.name,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style:textTheme.headlineSmall?.copyWith(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    )),
+                                    style:Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                ),
                                 const SizedBox(height: 4),
                                 Text(prod.description,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: textTheme.headlineSmall?.copyWith(
-                                      fontSize: 12
+                                    style: textTheme.bodySmall?.copyWith(
+                                      fontSize: 10
                                     ),
                                 ),
                                 Text("₹${prod.price}",
-                                    style: textTheme.bodySmall?.copyWith(color: Colors.deepPurpleAccent)),
+                                    style: textTheme.bodyMedium?.copyWith(fontSize: 10)),
                               ],
                             ),
                           ),

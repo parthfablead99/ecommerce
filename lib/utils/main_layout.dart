@@ -1,3 +1,4 @@
+import 'package:ecommerceapp/screen/cartscreen/view/cartScreen.dart';
 import 'package:ecommerceapp/screen/homeScreen/provider/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,7 @@ class MainLayout extends StatelessWidget {
       HomeScreen(),
       FavScreen(),
       Center(child: Text('Search Screen'),),
-      Center(child: Text('Profile Screen'),)
+      CartScreen(),
       // const ProfileScreen(),
     ];
 
@@ -32,7 +33,7 @@ class MainLayout extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favorites"),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: "Cart"),
         ],
       ),
     );

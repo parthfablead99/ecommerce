@@ -1,12 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../screen/productdetailscreen/view/product_detail.dart';
-import '../screen/cartscreen/view/cartScreen.dart';
+
 import '../screen/productdetailscreen/model/productModel.dart';
+import '../screen/productdetailscreen/view/product_detail.dart';
 import '../screen/productslistscreen/view/productlist_screen.dart';
 import '../utils/main_layout.dart';
 
 class AppRoutes {
-  // static const root = '/';
   static const home = '/home';
   static const products = '/products';
   static const productDetail = '/productDetail';
@@ -15,7 +15,6 @@ class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
 
-      // case root:
       case home:
         return MaterialPageRoute(builder: (_) => const MainLayout());
 
@@ -29,8 +28,9 @@ class AppRoutes {
         return MaterialPageRoute(
             builder: (_) => ProductDetailScreen(product: product));
 
+    // LOAD CART INSIDE MAINLAYOUT (IMPORTANT)
       case cart:
-        return MaterialPageRoute(builder: (_) => const CartScreen());
+        return MaterialPageRoute(builder: (_) => const MainLayout());
 
       default:
         return MaterialPageRoute(

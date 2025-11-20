@@ -48,8 +48,8 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
         centerTitle: true,
         title: Text(
             'Check Out',
-          style: textTheme.headlineSmall?.copyWith(
-            fontSize: 18,
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+            fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -80,7 +80,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
 
               Center(
                 child: Text('Enter Shipping Details',
-                  style: textTheme.headlineSmall?.copyWith(
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontSize: 18
                   ),
                 ),
@@ -88,7 +88,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
               SizedBox(height: 20),
 
               Text('Full Name',
-                style: textTheme.headlineSmall?.copyWith(
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
@@ -97,8 +97,8 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
               TextFormField(
                 cursorColor: Colors.black,
                 controller: nameController,
-                style: textTheme.headlineSmall?.copyWith(
-                  fontSize: 12,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontSize: 10,
                 ),
                 decoration: _fieldDecoration('Enter your name'),
                 validator: (v) => v!.isEmpty ? 'Required': null,
@@ -106,7 +106,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
               SizedBox(height: 15),
 
               Text('Phone Number',
-                style: textTheme.headlineSmall?.copyWith(
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 12,
                 ),
@@ -115,18 +115,18 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
 
               TextFormField(
                 cursorColor: Colors.black,
-                style: textTheme.headlineSmall?.copyWith(
-                  fontSize: 12,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontSize: 10,
                 ),
                 controller: numController,
                 decoration: _fieldDecoration('+91 | Enter mobile number'),
                 keyboardType: TextInputType.phone,
-                validator: (v) => v!.length < 10? 'Enter valid number':null,
+                validator: (v) => v!.length <= 10? 'Enter valid number':null,
               ),
               SizedBox(height: 15),
 
               Text('Select Province',
-                style: textTheme.headlineSmall?.copyWith(
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontSize: 12,
                   fontWeight: FontWeight.bold
                 ),
@@ -134,6 +134,10 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
               SizedBox(height: 5),
 
               DropdownButtonFormField(
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w100
+                ),
                 decoration: _fieldDecoration("Select Province"),
                 items: provinces
                     .map((p) => DropdownMenuItem(value: p, child: Text(p)))
@@ -144,7 +148,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
               SizedBox(height: 15),
 
               Text('Select City',
-                style: textTheme.headlineSmall?.copyWith(
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
@@ -152,6 +156,10 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
               SizedBox(height: 5),
 
               DropdownButtonFormField(
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w100
+                ),
                 decoration: _fieldDecoration("Select City"),
                 items: cities
                     .map((c) => DropdownMenuItem(value: c, child: Text(c)))
@@ -162,7 +170,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
               SizedBox(height: 15),
 
               Text('Address',
-                style: textTheme.headlineSmall?.copyWith(
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
@@ -172,8 +180,8 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
               ),
               TextFormField(
                 cursorColor: Colors.black,
-                style: textTheme.headlineSmall?.copyWith(
-                  fontSize: 12,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontSize: 10,
                 ),
                 controller: streetController,
                 decoration: _fieldDecoration('Enter Address'),
@@ -182,7 +190,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
               SizedBox(height: 15),
 
               Text('Postal Code',
-                style: textTheme.headlineSmall?.copyWith(
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontSize: 12,
                   fontWeight: FontWeight.bold
                 ),
@@ -191,8 +199,8 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
 
               TextFormField(
                 cursorColor: Colors.black,
-                style: textTheme.headlineSmall?.copyWith(
-                  fontSize: 12,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontSize: 10,
                 ),
                 controller: postalController,
                 keyboardType: TextInputType.number,
@@ -222,7 +230,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                     height: 50,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.black,
+                      color: Colors.deepPurpleAccent,
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Center(
@@ -249,9 +257,9 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
       fillColor: Colors.grey.shade200,
       filled: true,
       hintText: hint,
-      hintStyle: TextStyle(
-        color: Colors.grey,
-        fontSize: 14,
+      hintStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(
+        fontSize: 10,
+        fontWeight: FontWeight.w100
       ),
       contentPadding: EdgeInsets.symmetric(
         horizontal: 16,

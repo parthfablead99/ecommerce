@@ -1,3 +1,5 @@
+import 'package:ecommerceapp/screen/cartscreen/model/cartModel.dart';
+import 'package:ecommerceapp/screen/cartscreen/provider/cartProvider.dart';
 import 'package:ecommerceapp/screen/homeScreen/provider/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +23,6 @@ class _FavScreenState extends State<FavScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // ---------- HEADER ----------
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
               decoration: BoxDecoration(
@@ -69,8 +70,6 @@ class _FavScreenState extends State<FavScreen> {
             ),
 
             const SizedBox(height: 10),
-
-            // ---------- GRID ----------
             Expanded(
               child: Consumer<FavProvider>(
                 builder: (context, favProvider, child) {
@@ -154,6 +153,52 @@ class _FavScreenState extends State<FavScreen> {
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
+                              ),
+                              Spacer(),
+
+                              Consumer<CartProvider>(
+                                  builder: (context, cartProvider,child){
+                                    return Padding(
+                                        padding: EdgeInsets.all(12),
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        child: ElevatedButton(
+                                            onPressed: (){
+                                              cartProvider.addCart(
+                                                CartItemModel(
+                                                    name: product.name,
+                                                    brand: product.brand,
+                                                    image: product.image,
+                                                    price: product.price,
+                                                ),
+                                              );
+
+                                              Provider.of<FavProvider>(context,listen: false).toggleFav(product);
+
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(
+                                                    content: Text('Moved to Cart'),
+                                                  duration: Duration(seconds: 1),
+                                                ),
+                                              );
+                                            },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.deepPurpleAccent,
+                                            padding: EdgeInsets.symmetric(vertical: 10),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadiusGeometry.circular(10)
+                                            ),
+                                          ),
+                                            child: Text('ADD',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                        ),
+                                      ),
+                                    );
+                                  },
                               ),
                             ],
                           ),

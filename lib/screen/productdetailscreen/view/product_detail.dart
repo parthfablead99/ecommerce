@@ -43,7 +43,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // ------------------- IMAGE HEADER ---------------------
             Stack(
               children: [
                 Container(
@@ -89,19 +88,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ],
             ),
-
-            // ------------------- DETAILS ---------------------
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // NAME + PRICE
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(product.name, style: textTheme.headlineSmall),
+                        Text(product.name,
+                            style: textTheme.headlineSmall,
+                        ),
                         Text(
                           "₹${product.price}",
                           style: textTheme.bodySmall?.copyWith(
@@ -114,8 +112,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
                     SizedBox(height: 15),
 
-                    // DESCRIPTION
-                    Text("Description", style: textTheme.titleMedium),
+                    Text("Description",
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontSize: 14
+                        ),
+                    ),
                     SizedBox(height: 5),
 
                     Column(
@@ -126,8 +127,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           maxLines: isMore ? null : 1,
                           overflow:
                           isMore ? TextOverflow.visible : TextOverflow.ellipsis,
-                          style:
-                          textTheme.headlineMedium?.copyWith(fontSize: 12),
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold
+                          ),
                         ),
                         SizedBox(height: 4),
                         GestureDetector(
@@ -146,7 +149,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
                     SizedBox(height: 20),
 
-                    // SIZE SELECTION
                     Text("Size", style: textTheme.titleMedium),
                     SizedBox(height: 10),
 
@@ -197,7 +199,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
                     SizedBox(height: 25),
 
-                    // ADD TO CART BUTTON
                     InkWell(
                       onTap: () {
                         cartProvider.addCart(
@@ -263,7 +264,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
 
-                    SizedBox(height: 20),
+                    // SizedBox(height: 20),
                   ],
                 ),
               ),

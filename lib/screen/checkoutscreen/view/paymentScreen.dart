@@ -1,4 +1,5 @@
 import 'package:ecommerceapp/screen/checkoutscreen/provider/checkOutProvider.dart';
+import 'package:ecommerceapp/screen/checkoutscreen/view/reviewScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -246,16 +247,16 @@ class _PaymentscreenState extends State<Paymentscreen> {
                     if(!_formKey.currentState!.validate()) return;
                   }
                   payMent.updatePayment(selectedPaymentMethod!);
-                  // Navigator.push(context,
-                  //     MaterialPageRoute(builder: (_)=> ReviewScreen()),
-                  // );
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_)=> ReviewScreen()),
+                  );
                   
                 },
                 child: Container(
                   height: 50,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.black,
+                    color: Colors.deepPurpleAccent,
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Center(

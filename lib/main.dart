@@ -34,15 +34,43 @@ class MyApp extends StatelessWidget {
     GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme);
 
     final customTextTheme = baseTextTheme.copyWith(
-      headlineLarge: baseTextTheme.headlineLarge?.copyWith(color: Colors.black),
-      headlineMedium: baseTextTheme.headlineMedium?.copyWith(color: Colors.black),
-      headlineSmall: baseTextTheme.headlineSmall?.copyWith(color: Colors.black),
-      bodyLarge:
-      baseTextTheme.bodyLarge?.copyWith(color: Colors.deepPurpleAccent),
-      bodyMedium:
-      baseTextTheme.bodyMedium?.copyWith(color: Colors.deepPurpleAccent),
-      bodySmall:
-      baseTextTheme.bodySmall?.copyWith(color: Colors.deepPurpleAccent),
+      // -------- HEADLINES --------
+      headlineLarge: baseTextTheme.headlineLarge?.copyWith(
+        color: const Color(0xFF1E1E1E),   // Dark Grey (Primary)
+        fontWeight: FontWeight.w700,
+      ),
+      headlineMedium: baseTextTheme.headlineMedium?.copyWith(
+        color: const Color(0xFF6A5AE0),   // Indigo Purple (Accent)
+        fontWeight: FontWeight.w600,
+        fontSize: 14,
+      ),
+      headlineSmall: baseTextTheme.headlineSmall?.copyWith(
+        color: const Color(0xFF1E1E1E),   // Soft Teal
+        fontWeight: FontWeight.w600,
+      ),
+
+      // -------- BODY TEXT --------
+      bodyLarge: baseTextTheme.bodyLarge?.copyWith(
+        color: const Color(0xFF1E1E1E),   // Dark Grey — readable
+        fontSize: 16,
+      ),
+      bodyMedium: baseTextTheme.bodyMedium?.copyWith(
+        color: const Color(0xFF6A5AE0),  // Indigo Purple
+        fontSize: 12,
+      ),
+      bodySmall: baseTextTheme.bodySmall?.copyWith(
+        color: const Color(0xFF1E1E1E),  // Soft Red
+        fontSize: 12,
+      ),
+
+      // -------- LABELS (Buttons / Inputs) --------
+      labelLarge: baseTextTheme.labelLarge?.copyWith(
+        color: const Color(0xFFFFFFFF), // White text on buttons
+        fontWeight: FontWeight.bold,
+      ),
+      labelMedium: baseTextTheme.labelMedium?.copyWith(
+        color: const Color(0xFF6A5AE0),
+      ),
     );
 
     return MaterialApp(
