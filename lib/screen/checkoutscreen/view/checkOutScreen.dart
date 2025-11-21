@@ -1,5 +1,6 @@
 import 'package:ecommerceapp/screen/checkoutscreen/provider/checkOutProvider.dart';
 import 'package:ecommerceapp/screen/checkoutscreen/view/paymentScreen.dart';
+import 'package:ecommerceapp/utils/size_config.dart';
 import 'package:ecommerceapp/utils/stepIndicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -69,14 +70,14 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
         key: _formKey,
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(
-            horizontal: 20,
+            horizontal: 15,
             vertical: 10,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Stepindicator(currentStep: 1),
-              SizedBox(height: 18),
+              SizedBox(height: SizeConfig.blockHeight *2),
 
               Center(
                 child: Text('Enter Shipping Details',
@@ -85,7 +86,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: SizeConfig.blockHeight *3),
 
               Text('Full Name',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -93,7 +94,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: SizeConfig.blockHeight *1),
               TextFormField(
                 cursorColor: Colors.black,
                 controller: nameController,
@@ -103,7 +104,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                 decoration: _fieldDecoration('Enter your name'),
                 validator: (v) => v!.isEmpty ? 'Required': null,
               ),
-              SizedBox(height: 15),
+              SizedBox(height: SizeConfig.blockHeight *2),
 
               Text('Phone Number',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -111,7 +112,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                   fontSize: 12,
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: SizeConfig.blockHeight *1),
 
               TextFormField(
                 cursorColor: Colors.black,
@@ -123,7 +124,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                 keyboardType: TextInputType.phone,
                 validator: (v) => v!.length <= 10? 'Enter valid number':null,
               ),
-              SizedBox(height: 15),
+              SizedBox(height: SizeConfig.blockHeight *2),
 
               Text('Select Province',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -131,7 +132,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                   fontWeight: FontWeight.bold
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: SizeConfig.blockHeight *1),
 
               DropdownButtonFormField(
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -145,7 +146,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                 onChanged: (value) => setState(() => selectedProvince = value),
                 validator: (v) => v == null ? "Required" : null,
               ),
-              SizedBox(height: 15),
+              SizedBox(height: SizeConfig.blockHeight *2),
 
               Text('Select City',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -153,7 +154,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: SizeConfig.blockHeight *1),
 
               DropdownButtonFormField(
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -167,7 +168,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                 onChanged: (value) => setState(() => selectedCity = value),
                 validator: (v) => v == null ? "Required" : null,
               ),
-              SizedBox(height: 15),
+              SizedBox(height: SizeConfig.blockHeight *2),
 
               Text('Address',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -176,7 +177,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                 ),
               ),
               SizedBox(
-                height: 5,
+                height: SizeConfig.blockHeight *1,
               ),
               TextFormField(
                 cursorColor: Colors.black,
@@ -187,7 +188,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                 decoration: _fieldDecoration('Enter Address'),
                 validator: (v) => v!.isEmpty ? 'Required': null,
               ),
-              SizedBox(height: 15),
+              SizedBox(height: SizeConfig.blockHeight *2),
 
               Text('Postal Code',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -195,7 +196,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                   fontWeight: FontWeight.bold
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: SizeConfig.blockHeight *1),
 
               TextFormField(
                 cursorColor: Colors.black,
@@ -207,7 +208,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                 decoration: _fieldDecoration('Enter Postal Code'),
                 validator: (v) => v!.isEmpty ? 'Required' : null,
               ),
-              SizedBox(height: 35),
+              SizedBox(height: SizeConfig.blockHeight *2),
 
               Center(
                 child: GestureDetector(
@@ -227,7 +228,7 @@ class _CheckoutscreenState extends State<Checkoutscreen> {
                     }
                   },
                   child: Container(
-                    height: 50,
+                    height: SizeConfig.blockHeight * 7,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Colors.deepPurpleAccent,

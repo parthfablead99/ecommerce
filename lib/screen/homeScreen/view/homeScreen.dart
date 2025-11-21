@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerceapp/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../routes/app_routes.dart';
@@ -14,6 +15,8 @@ class HomeScreen extends StatelessWidget {
     final provider = context.watch<HomeProvider>();
     final textTheme = Theme.of(context).textTheme;
 
+    SizeConfig.init(context);
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -22,10 +25,10 @@ class HomeScreen extends StatelessWidget {
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage: const AssetImage('assets/image/image1.jpg'),
+              backgroundImage: AssetImage('assets/image/image1.jpg'),
               radius: 20,
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -37,7 +40,7 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.menu, color: Colors.black, size: 28),
+            icon: Icon(Icons.menu, color: Colors.black, size: 28),
             onPressed: () {
               // Add menu action if needed
             },
@@ -51,7 +54,10 @@ class HomeScreen extends StatelessWidget {
           // provider._initializeData(); // if you make method public
         },
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 10
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -59,10 +65,10 @@ class HomeScreen extends StatelessWidget {
                 onChanged: provider.updateSearchText,
                 decoration: InputDecoration(
                   hintText: 'Search...',
-                  prefixIcon: const Icon(Icons.search, color: Colors.deepPurpleAccent, size: 22),
+                  prefixIcon: Icon(Icons.search, color: Colors.deepPurpleAccent, size: 22),
                   filled: true,
                   fillColor: Colors.grey.shade100,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+                  contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                     borderSide: BorderSide.none,
@@ -74,7 +80,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
               CarouselSlider.builder(
                 itemCount: provider.bannerImage.length,
                 itemBuilder: (context, index, realIdx) {
@@ -89,7 +95,7 @@ class HomeScreen extends StatelessWidget {
                   );
                 },
                 options: CarouselOptions(
-                  height: 180,
+                  height: SizeConfig.blockHeight * 20,
                   autoPlay: true,
                   enlargeCenterPage: true,
                   viewportFraction: 0.9,
@@ -99,26 +105,27 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: provider.bannerImage.asMap().entries.map((entry) {
                   final idx = entry.key;
                   bool active = provider.bannerIndex == idx;
                   return AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    height: 8,
-                    width: active ? 20 : 8,
+                    duration: Duration(milliseconds: 300),
+                    margin: EdgeInsets.symmetric(horizontal: 4),
+                    height: SizeConfig.blockHeight * 1,
+                    width: active ? SizeConfig.blockWidth*3 : SizeConfig.blockWidth * 2,
                     decoration: BoxDecoration(
+                      shape: BoxShape.circle,
                       color: active ? Colors.deepPurpleAccent : Colors.grey,
-                      borderRadius: BorderRadius.circular(10),
+                      // borderRadius: BorderRadius.circular(10),
                     ),
                   );
                 }).toList(),
               ),
 
-              const SizedBox(height: 30),
+              SizedBox(height: SizeConfig.blockHeight * 2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -141,9 +148,9 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 12),
+              SizedBox(height: SizeConfig.blockHeight * 1),
               SizedBox(
-                height: 100,
+                height: SizeConfig.blockHeight * 13,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: provider.categories.length,
@@ -156,7 +163,7 @@ class HomeScreen extends StatelessWidget {
                           radius: 35,
                           backgroundImage: AssetImage(cat.image),
                         ),
-                        const SizedBox(height: 6),
+                        SizedBox(height: SizeConfig.blockHeight * 1),
                         Text(cat.name,
                             style:Theme.of(context).textTheme.bodySmall,
                         ),
@@ -166,7 +173,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 30),
+              SizedBox(height: SizeConfig.blockHeight * 2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -188,9 +195,9 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 12),
+              SizedBox(height: SizeConfig.blockHeight * 1),
               SizedBox(
-                height: 200,
+                height: SizeConfig.blockHeight * 21,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: provider.featured.length,
@@ -205,17 +212,17 @@ class HomeScreen extends StatelessWidget {
                         );
                       },
                       child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        margin: const EdgeInsets.symmetric(horizontal: 8),
-                        width: 150,
+                        duration: Duration(milliseconds: 200),
+                        margin: EdgeInsets.symmetric(vertical: 8,horizontal: 8),
+                        width: SizeConfig.blockWidth * 35,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.9),
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(18),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black12,
                               blurRadius: 8,
-                              offset: const Offset(0, 4),
+                              offset: Offset(0, 4),
                             ),
                           ],
                         ),
@@ -223,16 +230,16 @@ class HomeScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ClipRRect(
-                              borderRadius: const BorderRadius.vertical(top: Radius.circular(18)),
+                              borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
                               child: Image.asset(
                                 prod.image,
-                                height: 100,
+                                height: SizeConfig.blockHeight * 11,
                                 width: double.infinity,
                                 fit: BoxFit.cover,
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -244,7 +251,7 @@ class HomeScreen extends StatelessWidget {
                                         fontWeight: FontWeight.bold
                                       ),
                                   ),
-                                  const SizedBox(height: 4),
+                                  SizedBox(height: SizeConfig.blockHeight * .3),
                                   Text(prod.description,
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -266,18 +273,18 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 30),
+              SizedBox(height: SizeConfig.blockHeight * 3),
               Text("Most Popular",
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.bold
                   )),
-              const SizedBox(height: 12),
+              SizedBox(height: SizeConfig.blockHeight * 2),
 
               ListView.separated(
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 itemCount: provider.categories.length,
-                separatorBuilder: (context, index) => const SizedBox(height: 12),
+                separatorBuilder: (context, index) => SizedBox(height: SizeConfig.blockHeight * 2),
                 itemBuilder: (context, index) {
                   final ProductModel prod = provider.categories[index];
                   return GestureDetector(
@@ -289,7 +296,7 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      padding: const EdgeInsets.all(8),
+                      padding: EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
@@ -297,7 +304,7 @@ class HomeScreen extends StatelessWidget {
                           BoxShadow(
                             color: Colors.black12,
                             blurRadius: 10,
-                            offset: const Offset(0, 4),
+                            offset: Offset(0, 4),
                           ),
                         ],
                       ),
@@ -305,9 +312,14 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: Image.asset(prod.image, width: 70, height: 70, fit: BoxFit.cover),
+                            child: Image.asset(
+                                prod.image,
+                                width: SizeConfig.blockWidth * 20,
+                                height: SizeConfig.blockHeight * 9,
+                                fit: BoxFit.cover,
+                            ),
                           ),
-                          const SizedBox(width: 12),
+                          SizedBox(width: 12),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -320,7 +332,7 @@ class HomeScreen extends StatelessWidget {
                                       fontWeight: FontWeight.bold
                                     ),
                                 ),
-                                const SizedBox(height: 4),
+                                SizedBox(height: SizeConfig.blockHeight * .5),
                                 Text(prod.description,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -334,8 +346,8 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            height: 28,
-                              width: 28,
+                            height: SizeConfig.blockHeight * 3.5,
+                              width: SizeConfig.blockWidth * 7,
                               decoration: BoxDecoration(
                                 color: Colors.deepPurpleAccent,
                                 shape: BoxShape.circle,
@@ -352,8 +364,6 @@ class HomeScreen extends StatelessWidget {
                   );
                 },
               ),
-
-              const SizedBox(height: 30),
             ],
           ),
         ),

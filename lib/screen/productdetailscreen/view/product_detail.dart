@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../model/product_detail_model.dart';
+import '../../../utils/size_config.dart';
 import '../../cartscreen/model/cartModel.dart';
 import '../../cartscreen/provider/cartProvider.dart';
 import '../../cartscreen/view/cartScreen.dart';
@@ -46,7 +47,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Stack(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.40,
+                  height: SizeConfig.blockHeight * 40,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     image: DecorationImage(
@@ -89,8 +90,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ],
             ),
             Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 15,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -197,7 +201,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       }).toList(),
                     ),
 
-                    SizedBox(height: 25),
+                    SizedBox(height: SizeConfig.blockHeight * 19),
 
                     InkWell(
                       onTap: () {
@@ -228,7 +232,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       },
                       borderRadius: BorderRadius.circular(30),
                       child: Container(
-                        height: 50,
+                        height: SizeConfig.blockHeight * 7,
                         width: double.infinity,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../utils/size_config.dart';
 import '../../../utils/stepIndicator.dart';
 
 class Paymentscreen extends StatefulWidget {
@@ -83,195 +84,192 @@ class _PaymentscreenState extends State<Paymentscreen> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-          horizontal: 9,
-          vertical: 9,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Stepindicator(currentStep: 2),
-              ],
-            ),
-            SizedBox(height: 18),
-
-            Center(
-              child: Text('Select Payment Method',
-                style: textTheme.headlineSmall?.copyWith(
-                    fontSize: 18
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 10
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stepindicator(currentStep: 2),
+              SizedBox(height: SizeConfig.blockHeight *2),
+        
+              Center(
+                child: Text('Select Payment Method',
+                  style: textTheme.headlineSmall?.copyWith(
+                      fontSize: 18
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-
-            paymentOption(
-                title: 'Credit Card',
-                asset: 'assets/image/creditcard.png',
-                value: 'Credit Card',
-            ),
-            paymentOption(
-                title: 'Stripe',
-                asset: 'assets/image/stripelogo.png',
-                value: 'Stripe',
-            ),
-            paymentOption(
-                title: 'Razor Pay',
-                asset: 'assets/image/razorpay.png',
-                value: 'RazorPay',
-            ),
-
-            if(selectedPaymentMethod == 'Credit Card')...[
-              SizedBox(height: 20),
-
-              Form(
-                key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Card Holder Name',
-                        style: textTheme.headlineSmall?.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 6),
-                      TextFormField(
-                        style: textTheme.headlineSmall?.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        cursorColor: Colors.black,
-                        controller: cardnameController,
-                        decoration: _fieldDecoration('Enter Card Holder Name'),
-                        validator: (v)=> v!.isEmpty ? 'Required' : null,
-                      ),
-                      SizedBox(height: 18),
-                      
-                      Text('Card Number',
-                        style: textTheme.headlineSmall?.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 6),
-                      TextFormField(
-                        cursorColor: Colors.black,
-                        style: textTheme.headlineSmall?.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        controller: cardnumController,
-                        keyboardType: TextInputType.number,
-                        decoration: _fieldDecoration('Enter Card Number'),
-                        validator: (v) => v!.length <16 ? 'Invalid Card Number':null,
-                      ),
-                      SizedBox(height: 18),
-
-                      Row(
-                        children: [
-                          Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Expiry Date',
-                                    style: textTheme.headlineSmall?.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: 6,),
-
-                                  TextFormField(
-                                    cursorColor: Colors.black,
-                                    style: textTheme.headlineSmall?.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    controller: expiryController,
-                                    keyboardType: TextInputType.datetime,
-                                    decoration: _fieldDecoration('MM/YY'),
-                                    validator: (v)=> v!.isEmpty ? 'Required' : null,
-                                  ),
-                                ],
-                              ),
-                          ),
-                          SizedBox(width: 18,),
-
-                          Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('CVV',
-                                    style: textTheme.headlineSmall?.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: 6,),
-                                  TextFormField(
-                                    cursorColor: Colors.black,
-                                    style: textTheme.headlineSmall?.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    controller: cvvController,
-                                    keyboardType: TextInputType.number,
-                                    decoration: _fieldDecoration('123'),
-                                    validator: (v)=> v!.length < 3 ? 'Required':null,
-                                  ),
-                                ],
-                              ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+              SizedBox(height: SizeConfig.blockHeight *3),
+        
+              paymentOption(
+                  title: 'Credit Card',
+                  asset: 'assets/image/creditcard.png',
+                  value: 'Credit Card',
               ),
-            ],
-            SizedBox(height: 25),
+              paymentOption(
+                  title: 'Stripe',
+                  asset: 'assets/image/stripelogo.png',
+                  value: 'Stripe',
+              ),
+              paymentOption(
+                  title: 'Razor Pay',
+                  asset: 'assets/image/razorpay.png',
+                  value: 'RazorPay',
+              ),
+        
+              if(selectedPaymentMethod == 'Credit Card')...[
+                SizedBox(height: SizeConfig.blockHeight *3),
+        
+                Form(
+                  key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Card Holder Name',
+                          style: textTheme.headlineSmall?.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: SizeConfig.blockHeight *1),
+                        TextFormField(
+                          style: textTheme.headlineSmall?.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          cursorColor: Colors.black,
+                          controller: cardnameController,
+                          decoration: _fieldDecoration('Enter Card Holder Name'),
+                          validator: (v)=> v!.isEmpty ? 'Required' : null,
+                        ),
+                        SizedBox(height: SizeConfig.blockHeight *2),
+        
+                        Text('Card Number',
+                          style: textTheme.headlineSmall?.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: SizeConfig.blockHeight *1),
+                        TextFormField(
+                          cursorColor: Colors.black,
+                          style: textTheme.headlineSmall?.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          controller: cardnumController,
+                          keyboardType: TextInputType.number,
+                          decoration: _fieldDecoration('Enter Card Number'),
+                          validator: (v) => v!.length <16 ? 'Invalid Card Number':null,
+                        ),
+                        SizedBox(height: SizeConfig.blockHeight *2),
+        
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Expiry Date',
+                                      style: textTheme.headlineSmall?.copyWith(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(height: SizeConfig.blockHeight *1),
+        
+                                    TextFormField(
+                                      cursorColor: Colors.black,
+                                      style: textTheme.headlineSmall?.copyWith(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      controller: expiryController,
+                                      keyboardType: TextInputType.datetime,
+                                      decoration: _fieldDecoration('MM/YY'),
+                                      validator: (v)=> v!.isEmpty ? 'Required' : null,
+                                    ),
+                                  ],
+                                ),
+                            ),
+                            SizedBox(width: SizeConfig.blockWidth *5),
+        
+                            Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('CVV',
+                                      style: textTheme.headlineSmall?.copyWith(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(height: SizeConfig.blockHeight *1),
+                                    TextFormField(
+                                      cursorColor: Colors.black,
+                                      style: textTheme.headlineSmall?.copyWith(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      controller: cvvController,
+                                      keyboardType: TextInputType.number,
+                                      decoration: _fieldDecoration('123'),
+                                      validator: (v)=> v!.length < 3 ? 'Required':null,
+                                    ),
+                                  ],
+                                ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                ),
+              ],
+              SizedBox(height: SizeConfig.blockHeight *3.5),
+        
+              Center(
+                child: GestureDetector(
+                  onTap: (){
+                    if(selectedPaymentMethod ==  null){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Please select payment method')),
+                      );
+                      return;
+                    }
 
-            Center(
-              child: GestureDetector(
-                onTap: (){
-                  if(selectedPaymentMethod ==  null){
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Please select payment method')),
+                    if(selectedPaymentMethod == 'Credit Card'){
+                      if(!_formKey.currentState!.validate()) return;
+                    }
+                    payMent.updatePayment(selectedPaymentMethod!);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_)=> ReviewScreen()),
                     );
-                    return;
-                  }
 
-                  if(selectedPaymentMethod == 'Credit Card'){
-                    if(!_formKey.currentState!.validate()) return;
-                  }
-                  payMent.updatePayment(selectedPaymentMethod!);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_)=> ReviewScreen()),
-                  );
-                  
-                },
-                child: Container(
-                  height: 50,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.deepPurpleAccent,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Center(
-                    child: Text('Confirm',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                  },
+                  child: Container(
+                    height: SizeConfig.blockHeight * 7,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.deepPurpleAccent,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Center(
+                      child: Text('Confirm',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -157,8 +157,16 @@ class ProductsList extends StatelessWidget {
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-
-                                const SizedBox(height: 4),
+                                Text(
+                                  product.description,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: textTheme.headlineSmall?.copyWith(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(height: 6),
 
                                 Row(
                                   mainAxisAlignment:
