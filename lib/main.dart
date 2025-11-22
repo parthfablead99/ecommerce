@@ -3,6 +3,7 @@ import 'package:ecommerceapp/routes/app_routes.dart';
 import 'package:ecommerceapp/screen/checkoutscreen/provider/checkOutProvider.dart';
 import 'package:ecommerceapp/screen/favscreen/provider/favProvider.dart';
 import 'package:ecommerceapp/screen/cartscreen/provider/cartProvider.dart';
+import 'package:ecommerceapp/screen/googleSignin/provider/auth_provider.dart';
 import 'package:ecommerceapp/screen/homeScreen/provider/home_provider.dart';
 import 'package:ecommerceapp/screen/productslistscreen/provider/productlist_provider.dart';
 import 'package:ecommerceapp/screen/productslistscreen/view/productlist_screen.dart';
@@ -20,6 +21,7 @@ void main() async{
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(create: (_) => FavProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
@@ -87,7 +89,7 @@ class MyApp extends StatelessWidget {
       ),
 
       // default home screen
-      initialRoute: AppRoutes.home,
+      initialRoute: AppRoutes.login,
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }

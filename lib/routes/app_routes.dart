@@ -1,3 +1,4 @@
+import 'package:ecommerceapp/screen/googleSignin/view/loginScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,7 @@ import '../screen/productslistscreen/view/productlist_screen.dart';
 import '../utils/main_layout.dart';
 
 class AppRoutes {
+  static const login = '/login';
   static const home = '/home';
   static const products = '/products';
   static const productDetail = '/productDetail';
@@ -14,6 +16,9 @@ class AppRoutes {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+
+      case login:
+        return MaterialPageRoute(builder: (_) => Loginscreen());
 
       case home:
         return MaterialPageRoute(builder: (_) => const MainLayout());
